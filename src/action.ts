@@ -24,6 +24,8 @@ import * as yaml from 'js-yaml'
 
 export async function run () {
   try {
+    process.env.GNUPGHOME = process.env.RUNNER_WORKSPACE
+    core.exportVariable('GNUPGHOME', process.env.GNUPGHOME)
     const required: InputOptions = {
       required: true
     }

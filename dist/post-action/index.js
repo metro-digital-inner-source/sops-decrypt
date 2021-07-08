@@ -1,11 +1,216 @@
 module.exports =
-/******/ (() => { // webpackBootstrap
+/******/ (function(modules, runtime) { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	__webpack_require__.ab = __dirname + "/";
+/******/
+/******/ 	// the startup function
+/******/ 	function startup() {
+/******/ 		// Load entry module and return exports
+/******/ 		return __webpack_require__(941);
+/******/ 	};
+/******/
+/******/ 	// run startup
+/******/ 	return startup();
+/******/ })
+/************************************************************************/
+/******/ ({
 
-/***/ 268:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 87:
+/***/ (function(module) {
 
+module.exports = require("os");
+
+/***/ }),
+
+/***/ 129:
+/***/ (function(module) {
+
+module.exports = require("child_process");
+
+/***/ }),
+
+/***/ 199:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+// For internal use, subject to change.
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// We use any as a valid input type
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const fs = __importStar(__webpack_require__(747));
+const os = __importStar(__webpack_require__(87));
+const utils_1 = __webpack_require__(214);
+function issueCommand(command, message) {
+    const filePath = process.env[`GITHUB_${command}`];
+    if (!filePath) {
+        throw new Error(`Unable to find environment variable for file command ${command}`);
+    }
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`Missing file at path: ${filePath}`);
+    }
+    fs.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
+        encoding: 'utf8'
+    });
+}
+exports.issueCommand = issueCommand;
+//# sourceMappingURL=file-command.js.map
+
+/***/ }),
+
+/***/ 214:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+// We use any as a valid input type
+/* eslint-disable @typescript-eslint/no-explicit-any */
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Sanitizes an input into a string so it can be passed into issueCommand safely
+ * @param input input to sanitize into a string
+ */
+function toCommandValue(input) {
+    if (input === null || input === undefined) {
+        return '';
+    }
+    else if (typeof input === 'string' || input instanceof String) {
+        return input;
+    }
+    return JSON.stringify(input);
+}
+exports.toCommandValue = toCommandValue;
+//# sourceMappingURL=utils.js.map
+
+/***/ }),
+
+/***/ 233:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.exec = void 0;
+/*
+ * Copyright 2021 METRO Digital GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const actionsExec = __importStar(__webpack_require__(783));
+function exec(command, args, stdin) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let output = '';
+        let error = '';
+        const options = {
+            silent: true,
+            ignoreReturnCode: true,
+            input: Buffer.from(stdin || '')
+        };
+        options.listeners = {
+            stdout: (data) => {
+                output += data.toString();
+            },
+            stderr: (data) => {
+                error += data.toString();
+            }
+        };
+        const returnCode = yield actionsExec.exec(command, args, options);
+        const result = {
+            status: returnCode === 0,
+            output: output.trim(),
+            error: error.trim()
+        };
+        return result;
+    });
+}
+exports.exec = exec;
+
+
+/***/ }),
+
+/***/ 334:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
 
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -14,9 +219,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+Object.defineProperty(exports, "__esModule", { value: true });
 const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(685);
+const utils_1 = __webpack_require__(214);
 /**
  * Commands
  *
@@ -88,10 +293,52 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 398:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 357:
+/***/ (function(module) {
 
+module.exports = require("assert");
 
+/***/ }),
+
+/***/ 410:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+/*
+ * Copyright 2021 METRO Digital GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -101,350 +348,138 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __webpack_require__(268);
-const file_command_1 = __webpack_require__(14);
-const utils_1 = __webpack_require__(685);
-const os = __importStar(__webpack_require__(87));
-const path = __importStar(__webpack_require__(622));
-/**
- * The code to exit an action
- */
-var ExitCode;
-(function (ExitCode) {
-    /**
-     * A code indicating that the action was successful
-     */
-    ExitCode[ExitCode["Success"] = 0] = "Success";
-    /**
-     * A code indicating that the action was a failure
-     */
-    ExitCode[ExitCode["Failure"] = 1] = "Failure";
-})(ExitCode = exports.ExitCode || (exports.ExitCode = {}));
-//-----------------------------------------------------------------------
-// Variables
-//-----------------------------------------------------------------------
-/**
- * Sets env variable for this action and future actions in the job
- * @param name the name of the variable to set
- * @param val the value of the variable. Non-string values will be converted to a string via JSON.stringify
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function exportVariable(name, val) {
-    const convertedVal = utils_1.toCommandValue(val);
-    process.env[name] = convertedVal;
-    const filePath = process.env['GITHUB_ENV'] || '';
-    if (filePath) {
-        const delimiter = '_GitHubActionsFileCommandDelimeter_';
-        const commandValue = `${name}<<${delimiter}${os.EOL}${convertedVal}${os.EOL}${delimiter}`;
-        file_command_1.issueCommand('ENV', commandValue);
-    }
-    else {
-        command_1.issueCommand('set-env', { name }, convertedVal);
-    }
-}
-exports.exportVariable = exportVariable;
-/**
- * Registers a secret which will get masked from logs
- * @param secret value of the secret
- */
-function setSecret(secret) {
-    command_1.issueCommand('add-mask', {}, secret);
-}
-exports.setSecret = setSecret;
-/**
- * Prepends inputPath to the PATH (for this action and future actions)
- * @param inputPath
- */
-function addPath(inputPath) {
-    const filePath = process.env['GITHUB_PATH'] || '';
-    if (filePath) {
-        file_command_1.issueCommand('PATH', inputPath);
-    }
-    else {
-        command_1.issueCommand('add-path', {}, inputPath);
-    }
-    process.env['PATH'] = `${inputPath}${path.delimiter}${process.env['PATH']}`;
-}
-exports.addPath = addPath;
-/**
- * Gets the value of an input.  The value is also trimmed.
- *
- * @param     name     name of the input to get
- * @param     options  optional. See InputOptions.
- * @returns   string
- */
-function getInput(name, options) {
-    const val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
-    if (options && options.required && !val) {
-        throw new Error(`Input required and not supplied: ${name}`);
-    }
-    return val.trim();
-}
-exports.getInput = getInput;
-/**
- * Sets the value of an output.
- *
- * @param     name     name of the output to set
- * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function setOutput(name, value) {
-    command_1.issueCommand('set-output', { name }, value);
-}
-exports.setOutput = setOutput;
-/**
- * Enables or disables the echoing of commands into stdout for the rest of the step.
- * Echoing is disabled by default if ACTIONS_STEP_DEBUG is not set.
- *
- */
-function setCommandEcho(enabled) {
-    command_1.issue('echo', enabled ? 'on' : 'off');
-}
-exports.setCommandEcho = setCommandEcho;
-//-----------------------------------------------------------------------
-// Results
-//-----------------------------------------------------------------------
-/**
- * Sets the action status to failed.
- * When the action exits it will be with an exit code of 1
- * @param message add error issue message
- */
-function setFailed(message) {
-    process.exitCode = ExitCode.Failure;
-    error(message);
-}
-exports.setFailed = setFailed;
-//-----------------------------------------------------------------------
-// Logging Commands
-//-----------------------------------------------------------------------
-/**
- * Gets whether Actions Step Debug is on or not
- */
-function isDebug() {
-    return process.env['RUNNER_DEBUG'] === '1';
-}
-exports.isDebug = isDebug;
-/**
- * Writes debug message to user log
- * @param message debug message
- */
-function debug(message) {
-    command_1.issueCommand('debug', {}, message);
-}
-exports.debug = debug;
-/**
- * Adds an error issue
- * @param message error issue message. Errors will be converted to string via toString()
- */
-function error(message) {
-    command_1.issue('error', message instanceof Error ? message.toString() : message);
-}
-exports.error = error;
-/**
- * Adds an warning issue
- * @param message warning issue message. Errors will be converted to string via toString()
- */
-function warning(message) {
-    command_1.issue('warning', message instanceof Error ? message.toString() : message);
-}
-exports.warning = warning;
-/**
- * Writes info to log with console.log.
- * @param message info message
- */
-function info(message) {
-    process.stdout.write(message + os.EOL);
-}
-exports.info = info;
-/**
- * Begin an output group.
- *
- * Output until the next `groupEnd` will be foldable in this group
- *
- * @param name The name of the output group
- */
-function startGroup(name) {
-    command_1.issue('group', name);
-}
-exports.startGroup = startGroup;
-/**
- * End an output group.
- */
-function endGroup() {
-    command_1.issue('endgroup');
-}
-exports.endGroup = endGroup;
-/**
- * Wrap an asynchronous function call in a group.
- *
- * Returns the same type as the function itself.
- *
- * @param name The name of the group
- * @param fn The function to wrap in the group
- */
-function group(name, fn) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.keyExists = exports.deleteKey = exports.deletePublicKey = exports.deleteSecretKey = exports.fingerprint = exports.importKey = void 0;
+const command = __importStar(__webpack_require__(233));
+const core = __importStar(__webpack_require__(896));
+function importKey(base64GPGKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        startGroup(name);
-        let result;
-        try {
-            result = yield fn();
+        const gpgKey = Buffer.from(base64GPGKey, 'base64').toString();
+        const gpgArgs = [];
+        gpgArgs.push('--import');
+        core.info('Importing the gpg key');
+        const result = yield command.exec('gpg', gpgArgs, gpgKey);
+        if (!result.status) {
+            core.info('Failed importing the GPG key');
+            return new Promise((resolve, reject) => {
+                reject(new Error(`Importing of GPG key failed: ${result.error}`));
+            });
         }
-        finally {
-            endGroup();
-        }
-        return result;
+        core.info('Successfully imported the gpg key');
+        core.saveState('GPG_KEY', base64GPGKey);
+        return new Promise((resolve) => {
+            resolve();
+        });
     });
 }
-exports.group = group;
-//-----------------------------------------------------------------------
-// Wrapper action state
-//-----------------------------------------------------------------------
-/**
- * Saves state for current action, the state can only be retrieved by this action's post job execution.
- *
- * @param     name     name of the state to store
- * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function saveState(name, value) {
-    command_1.issueCommand('save-state', { name }, value);
-}
-exports.saveState = saveState;
-/**
- * Gets the value of an state set by this action's main execution.
- *
- * @param     name     name of the state to get
- * @returns   string
- */
-function getState(name) {
-    return process.env[`STATE_${name}`] || '';
-}
-exports.getState = getState;
-//# sourceMappingURL=core.js.map
-
-/***/ }),
-
-/***/ 14:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-// For internal use, subject to change.
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-// We use any as a valid input type
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const fs = __importStar(__webpack_require__(747));
-const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(685);
-function issueCommand(command, message) {
-    const filePath = process.env[`GITHUB_${command}`];
-    if (!filePath) {
-        throw new Error(`Unable to find environment variable for file command ${command}`);
-    }
-    if (!fs.existsSync(filePath)) {
-        throw new Error(`Missing file at path: ${filePath}`);
-    }
-    fs.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
-        encoding: 'utf8'
-    });
-}
-exports.issueCommand = issueCommand;
-//# sourceMappingURL=file-command.js.map
-
-/***/ }),
-
-/***/ 685:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-// We use any as a valid input type
-/* eslint-disable @typescript-eslint/no-explicit-any */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-/**
- * Sanitizes an input into a string so it can be passed into issueCommand safely
- * @param input input to sanitize into a string
- */
-function toCommandValue(input) {
-    if (input === null || input === undefined) {
-        return '';
-    }
-    else if (typeof input === 'string' || input instanceof String) {
-        return input;
-    }
-    return JSON.stringify(input);
-}
-exports.toCommandValue = toCommandValue;
-//# sourceMappingURL=utils.js.map
-
-/***/ }),
-
-/***/ 626:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tr = __importStar(__webpack_require__(336));
-/**
- * Exec a command.
- * Output will be streamed to the live console.
- * Returns promise with return code
- *
- * @param     commandLine        command to execute (can include additional args). Must be correctly escaped.
- * @param     args               optional arguments for tool. Escaping is handled by the lib.
- * @param     options            optional exec options.  See ExecOptions
- * @returns   Promise<number>    exit code
- */
-function exec(commandLine, args, options) {
+exports.importKey = importKey;
+function fingerprint(base64GPGKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        const commandArgs = tr.argStringToArray(commandLine);
-        if (commandArgs.length === 0) {
-            throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
+        const gpgKey = Buffer.from(base64GPGKey, 'base64').toString();
+        const gpgArgs = [];
+        gpgArgs.push('--with-colons');
+        gpgArgs.push('--import-options', 'show-only');
+        gpgArgs.push('--import');
+        gpgArgs.push('--fingerprint');
+        const gpgResult = yield command.exec('gpg', gpgArgs, gpgKey);
+        if (!gpgResult.status) {
+            return new Promise((resolve, reject) => {
+                reject(new Error(`Unable to get the fingerprint of the gpg key: ${gpgResult.error}`));
+            });
         }
-        // Path to tool to execute should be first arg
-        const toolPath = commandArgs[0];
-        args = commandArgs.slice(1).concat(args || []);
-        const runner = new tr.ToolRunner(toolPath, args, options);
-        return runner.exec();
+        const fingerprints = gpgResult.output;
+        const matchingString = 'fpr';
+        let fingerprint = fingerprints.slice(fingerprints.indexOf(matchingString) + matchingString.length).split('\n')[0];
+        fingerprint = fingerprint.replace(/[^a-zA-Z0-9]/g, '');
+        return new Promise((resolve) => {
+            resolve(fingerprint);
+        });
     });
 }
-exports.exec = exec;
-//# sourceMappingURL=exec.js.map
+exports.fingerprint = fingerprint;
+function deleteSecretKey(fingerprint) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gpgArgs = [];
+        gpgArgs.push('--batch');
+        gpgArgs.push('--yes');
+        gpgArgs.push('--delete-secret-keys');
+        gpgArgs.push(fingerprint);
+        const result = yield command.exec('gpg', gpgArgs);
+        if (!result.status) {
+            return new Promise((resolve, reject) => {
+                reject(new Error(`Deleting private GPG key failed: ${result.error}`));
+            });
+        }
+        return new Promise((resolve) => {
+            resolve();
+        });
+    });
+}
+exports.deleteSecretKey = deleteSecretKey;
+function deletePublicKey(fingerprint) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gpgArgs = [];
+        gpgArgs.push('--batch');
+        gpgArgs.push('--yes');
+        gpgArgs.push('--delete-keys');
+        gpgArgs.push(fingerprint);
+        const result = yield command.exec('gpg', gpgArgs);
+        if (!result.status) {
+            return new Promise((resolve, reject) => {
+                reject(new Error(`Deleting gpg public key failed: ${result.error}`));
+            });
+        }
+        return new Promise((resolve) => {
+            resolve();
+        });
+    });
+}
+exports.deletePublicKey = deletePublicKey;
+function deleteKey(fingerprint) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield deleteSecretKey(fingerprint);
+        yield deletePublicKey(fingerprint);
+    });
+}
+exports.deleteKey = deleteKey;
+function keyExists(fingerprint) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gpgArgs = [];
+        gpgArgs.push('--list-secret-keys', fingerprint);
+        const result = yield command.exec('gpg', gpgArgs);
+        return result.status;
+    });
+}
+exports.keyExists = keyExists;
+
 
 /***/ }),
 
-/***/ 336:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 614:
+/***/ (function(module) {
 
+module.exports = require("events");
+
+/***/ }),
+
+/***/ 622:
+/***/ (function(module) {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ 669:
+/***/ (function(module) {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ 707:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -462,13 +497,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+Object.defineProperty(exports, "__esModule", { value: true });
 const os = __importStar(__webpack_require__(87));
 const events = __importStar(__webpack_require__(614));
 const child = __importStar(__webpack_require__(129));
 const path = __importStar(__webpack_require__(622));
-const io = __importStar(__webpack_require__(589));
-const ioUtil = __importStar(__webpack_require__(298));
+const io = __importStar(__webpack_require__(977));
+const ioUtil = __importStar(__webpack_require__(920));
 /* eslint-disable @typescript-eslint/unbound-method */
 const IS_WINDOWS = process.platform === 'win32';
 /*
@@ -1048,9 +1083,313 @@ class ExecState extends events.EventEmitter {
 
 /***/ }),
 
-/***/ 298:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 747:
+/***/ (function(module) {
 
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 783:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const tr = __importStar(__webpack_require__(707));
+/**
+ * Exec a command.
+ * Output will be streamed to the live console.
+ * Returns promise with return code
+ *
+ * @param     commandLine        command to execute (can include additional args). Must be correctly escaped.
+ * @param     args               optional arguments for tool. Escaping is handled by the lib.
+ * @param     options            optional exec options.  See ExecOptions
+ * @returns   Promise<number>    exit code
+ */
+function exec(commandLine, args, options) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const commandArgs = tr.argStringToArray(commandLine);
+        if (commandArgs.length === 0) {
+            throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
+        }
+        // Path to tool to execute should be first arg
+        const toolPath = commandArgs[0];
+        args = commandArgs.slice(1).concat(args || []);
+        const runner = new tr.ToolRunner(toolPath, args, options);
+        return runner.exec();
+    });
+}
+exports.exec = exec;
+//# sourceMappingURL=exec.js.map
+
+/***/ }),
+
+/***/ 896:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const command_1 = __webpack_require__(334);
+const file_command_1 = __webpack_require__(199);
+const utils_1 = __webpack_require__(214);
+const os = __importStar(__webpack_require__(87));
+const path = __importStar(__webpack_require__(622));
+/**
+ * The code to exit an action
+ */
+var ExitCode;
+(function (ExitCode) {
+    /**
+     * A code indicating that the action was successful
+     */
+    ExitCode[ExitCode["Success"] = 0] = "Success";
+    /**
+     * A code indicating that the action was a failure
+     */
+    ExitCode[ExitCode["Failure"] = 1] = "Failure";
+})(ExitCode = exports.ExitCode || (exports.ExitCode = {}));
+//-----------------------------------------------------------------------
+// Variables
+//-----------------------------------------------------------------------
+/**
+ * Sets env variable for this action and future actions in the job
+ * @param name the name of the variable to set
+ * @param val the value of the variable. Non-string values will be converted to a string via JSON.stringify
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function exportVariable(name, val) {
+    const convertedVal = utils_1.toCommandValue(val);
+    process.env[name] = convertedVal;
+    const filePath = process.env['GITHUB_ENV'] || '';
+    if (filePath) {
+        const delimiter = '_GitHubActionsFileCommandDelimeter_';
+        const commandValue = `${name}<<${delimiter}${os.EOL}${convertedVal}${os.EOL}${delimiter}`;
+        file_command_1.issueCommand('ENV', commandValue);
+    }
+    else {
+        command_1.issueCommand('set-env', { name }, convertedVal);
+    }
+}
+exports.exportVariable = exportVariable;
+/**
+ * Registers a secret which will get masked from logs
+ * @param secret value of the secret
+ */
+function setSecret(secret) {
+    command_1.issueCommand('add-mask', {}, secret);
+}
+exports.setSecret = setSecret;
+/**
+ * Prepends inputPath to the PATH (for this action and future actions)
+ * @param inputPath
+ */
+function addPath(inputPath) {
+    const filePath = process.env['GITHUB_PATH'] || '';
+    if (filePath) {
+        file_command_1.issueCommand('PATH', inputPath);
+    }
+    else {
+        command_1.issueCommand('add-path', {}, inputPath);
+    }
+    process.env['PATH'] = `${inputPath}${path.delimiter}${process.env['PATH']}`;
+}
+exports.addPath = addPath;
+/**
+ * Gets the value of an input.  The value is also trimmed.
+ *
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   string
+ */
+function getInput(name, options) {
+    const val = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+    if (options && options.required && !val) {
+        throw new Error(`Input required and not supplied: ${name}`);
+    }
+    return val.trim();
+}
+exports.getInput = getInput;
+/**
+ * Sets the value of an output.
+ *
+ * @param     name     name of the output to set
+ * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function setOutput(name, value) {
+    command_1.issueCommand('set-output', { name }, value);
+}
+exports.setOutput = setOutput;
+/**
+ * Enables or disables the echoing of commands into stdout for the rest of the step.
+ * Echoing is disabled by default if ACTIONS_STEP_DEBUG is not set.
+ *
+ */
+function setCommandEcho(enabled) {
+    command_1.issue('echo', enabled ? 'on' : 'off');
+}
+exports.setCommandEcho = setCommandEcho;
+//-----------------------------------------------------------------------
+// Results
+//-----------------------------------------------------------------------
+/**
+ * Sets the action status to failed.
+ * When the action exits it will be with an exit code of 1
+ * @param message add error issue message
+ */
+function setFailed(message) {
+    process.exitCode = ExitCode.Failure;
+    error(message);
+}
+exports.setFailed = setFailed;
+//-----------------------------------------------------------------------
+// Logging Commands
+//-----------------------------------------------------------------------
+/**
+ * Gets whether Actions Step Debug is on or not
+ */
+function isDebug() {
+    return process.env['RUNNER_DEBUG'] === '1';
+}
+exports.isDebug = isDebug;
+/**
+ * Writes debug message to user log
+ * @param message debug message
+ */
+function debug(message) {
+    command_1.issueCommand('debug', {}, message);
+}
+exports.debug = debug;
+/**
+ * Adds an error issue
+ * @param message error issue message. Errors will be converted to string via toString()
+ */
+function error(message) {
+    command_1.issue('error', message instanceof Error ? message.toString() : message);
+}
+exports.error = error;
+/**
+ * Adds an warning issue
+ * @param message warning issue message. Errors will be converted to string via toString()
+ */
+function warning(message) {
+    command_1.issue('warning', message instanceof Error ? message.toString() : message);
+}
+exports.warning = warning;
+/**
+ * Writes info to log with console.log.
+ * @param message info message
+ */
+function info(message) {
+    process.stdout.write(message + os.EOL);
+}
+exports.info = info;
+/**
+ * Begin an output group.
+ *
+ * Output until the next `groupEnd` will be foldable in this group
+ *
+ * @param name The name of the output group
+ */
+function startGroup(name) {
+    command_1.issue('group', name);
+}
+exports.startGroup = startGroup;
+/**
+ * End an output group.
+ */
+function endGroup() {
+    command_1.issue('endgroup');
+}
+exports.endGroup = endGroup;
+/**
+ * Wrap an asynchronous function call in a group.
+ *
+ * Returns the same type as the function itself.
+ *
+ * @param name The name of the group
+ * @param fn The function to wrap in the group
+ */
+function group(name, fn) {
+    return __awaiter(this, void 0, void 0, function* () {
+        startGroup(name);
+        let result;
+        try {
+            result = yield fn();
+        }
+        finally {
+            endGroup();
+        }
+        return result;
+    });
+}
+exports.group = group;
+//-----------------------------------------------------------------------
+// Wrapper action state
+//-----------------------------------------------------------------------
+/**
+ * Saves state for current action, the state can only be retrieved by this action's post job execution.
+ *
+ * @param     name     name of the state to store
+ * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function saveState(name, value) {
+    command_1.issueCommand('save-state', { name }, value);
+}
+exports.saveState = saveState;
+/**
+ * Gets the value of an state set by this action's main execution.
+ *
+ * @param     name     name of the state to get
+ * @returns   string
+ */
+function getState(name) {
+    return process.env[`STATE_${name}`] || '';
+}
+exports.getState = getState;
+//# sourceMappingURL=core.js.map
+
+/***/ }),
+
+/***/ 920:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1062,7 +1401,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a;
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+Object.defineProperty(exports, "__esModule", { value: true });
 const assert_1 = __webpack_require__(357);
 const fs = __webpack_require__(747);
 const path = __webpack_require__(622);
@@ -1249,9 +1588,92 @@ function isUnixExecutable(stats) {
 
 /***/ }),
 
-/***/ 589:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 941:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
+"use strict";
+
+/*
+ * Copyright 2021 METRO Digital GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.run = void 0;
+const core = __importStar(__webpack_require__(896));
+const gpg = __importStar(__webpack_require__(410));
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gpgKey = core.getState('GPG_KEY');
+        try {
+            if (gpgKey) {
+                core.info('Getting the fingerprint');
+                const fingerprint = yield gpg.fingerprint(gpgKey);
+                core.info('Got the fingerprint');
+                if (yield gpg.keyExists(fingerprint)) {
+                    core.info('Deleting the imported gpg key');
+                    yield gpg.deleteKey(fingerprint);
+                    core.info('Successfully deleted the imported gpg key');
+                }
+                else {
+                    core.info('GPG key does not exist');
+                }
+            }
+        }
+        catch (e) {
+            core.setFailed(`Error while deleting the gpg key ${e.message}`);
+            throw new Error(`Error while deleting the gpg key: ${e.message}`);
+        }
+    });
+}
+exports.run = run;
+run().catch((e) => { core.setFailed(e.message); });
+
+
+/***/ }),
+
+/***/ 977:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1262,11 +1684,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+Object.defineProperty(exports, "__esModule", { value: true });
 const childProcess = __webpack_require__(129);
 const path = __webpack_require__(622);
 const util_1 = __webpack_require__(669);
-const ioUtil = __webpack_require__(298);
+const ioUtil = __webpack_require__(920);
 const exec = util_1.promisify(childProcess.exec);
 /**
  * Copies a file or folder.
@@ -1543,411 +1965,6 @@ function copyFile(srcFile, destFile, force) {
 }
 //# sourceMappingURL=io.js.map
 
-/***/ }),
-
-/***/ 909:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exec = void 0;
-/*
- * Copyright 2021 METRO Digital GmbH
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const actionsExec = __importStar(__webpack_require__(626));
-function exec(command, args, stdin) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let output = '';
-        let error = '';
-        const options = {
-            silent: true,
-            ignoreReturnCode: true,
-            input: Buffer.from(stdin || '')
-        };
-        options.listeners = {
-            stdout: (data) => {
-                output += data.toString();
-            },
-            stderr: (data) => {
-                error += data.toString();
-            }
-        };
-        const returnCode = yield actionsExec.exec(command, args, options);
-        const result = {
-            status: returnCode === 0,
-            output: output.trim(),
-            error: error.trim()
-        };
-        return result;
-    });
-}
-exports.exec = exec;
-
-
-/***/ }),
-
-/***/ 164:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*
- * Copyright 2021 METRO Digital GmbH
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.keyExists = exports.deleteKey = exports.deletePublicKey = exports.deleteSecretKey = exports.fingerprint = exports.importKey = void 0;
-const command = __importStar(__webpack_require__(909));
-const core = __importStar(__webpack_require__(398));
-function importKey(base64GPGKey) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgKey = Buffer.from(base64GPGKey, 'base64').toString();
-        const gpgArgs = [];
-        gpgArgs.push('--import');
-        core.info('Importing the gpg key');
-        const result = yield command.exec('gpg', gpgArgs, gpgKey);
-        if (!result.status) {
-            core.info('Failed importing the GPG key');
-            return new Promise((resolve, reject) => {
-                reject(new Error(`Importing of GPG key failed: ${result.error}`));
-            });
-        }
-        core.info('Successfully imported the gpg key');
-        core.saveState('GPG_KEY', base64GPGKey);
-        return new Promise((resolve) => {
-            resolve();
-        });
-    });
-}
-exports.importKey = importKey;
-function fingerprint(base64GPGKey) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgKey = Buffer.from(base64GPGKey, 'base64').toString();
-        const gpgArgs = [];
-        gpgArgs.push('--with-colons');
-        gpgArgs.push('--import-options', 'show-only');
-        gpgArgs.push('--import');
-        gpgArgs.push('--fingerprint');
-        const gpgResult = yield command.exec('gpg', gpgArgs, gpgKey);
-        if (!gpgResult.status) {
-            return new Promise((resolve, reject) => {
-                reject(new Error(`Unable to get the fingerprint of the gpg key: ${gpgResult.error}`));
-            });
-        }
-        const fingerprints = gpgResult.output;
-        const matchingString = 'fpr';
-        let fingerprint = fingerprints.slice(fingerprints.indexOf(matchingString) + matchingString.length).split('\n')[0];
-        fingerprint = fingerprint.replace(/[^a-zA-Z0-9]/g, '');
-        return new Promise((resolve) => {
-            resolve(fingerprint);
-        });
-    });
-}
-exports.fingerprint = fingerprint;
-function deleteSecretKey(fingerprint) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgArgs = [];
-        gpgArgs.push('--batch');
-        gpgArgs.push('--yes');
-        gpgArgs.push('--delete-secret-keys');
-        gpgArgs.push(fingerprint);
-        const result = yield command.exec('gpg', gpgArgs);
-        if (!result.status) {
-            return new Promise((resolve, reject) => {
-                reject(new Error(`Deleting private GPG key failed: ${result.error}`));
-            });
-        }
-        return new Promise((resolve) => {
-            resolve();
-        });
-    });
-}
-exports.deleteSecretKey = deleteSecretKey;
-function deletePublicKey(fingerprint) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgArgs = [];
-        gpgArgs.push('--batch');
-        gpgArgs.push('--yes');
-        gpgArgs.push('--delete-keys');
-        gpgArgs.push(fingerprint);
-        const result = yield command.exec('gpg', gpgArgs);
-        if (!result.status) {
-            return new Promise((resolve, reject) => {
-                reject(new Error(`Deleting gpg public key failed: ${result.error}`));
-            });
-        }
-        return new Promise((resolve) => {
-            resolve();
-        });
-    });
-}
-exports.deletePublicKey = deletePublicKey;
-function deleteKey(fingerprint) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield deleteSecretKey(fingerprint);
-        yield deletePublicKey(fingerprint);
-    });
-}
-exports.deleteKey = deleteKey;
-function keyExists(fingerprint) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgArgs = [];
-        gpgArgs.push('--list-secret-keys', fingerprint);
-        const result = yield command.exec('gpg', gpgArgs);
-        return result.status;
-    });
-}
-exports.keyExists = keyExists;
-
-
-/***/ }),
-
-/***/ 699:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*
- * Copyright 2021 METRO Digital GmbH
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = void 0;
-const core = __importStar(__webpack_require__(398));
-const gpg = __importStar(__webpack_require__(164));
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const gpgKey = core.getState('GPG_KEY');
-        try {
-            if (gpgKey) {
-                core.info('Getting the fingerprint');
-                const fingerprint = yield gpg.fingerprint(gpgKey);
-                core.info('Got the fingerprint');
-                if (yield gpg.keyExists(fingerprint)) {
-                    core.info('Deleting the imported gpg key');
-                    yield gpg.deleteKey(fingerprint);
-                    core.info('Successfully deleted the imported gpg key');
-                }
-                else {
-                    core.info('GPG key does not exist');
-                }
-            }
-        }
-        catch (e) {
-            core.setFailed(`Error while deleting the gpg key ${e.message}`);
-            throw new Error(`Error while deleting the gpg key: ${e.message}`);
-        }
-    });
-}
-exports.run = run;
-run().catch((e) => { core.setFailed(e.message); });
-
-
-/***/ }),
-
-/***/ 357:
-/***/ ((module) => {
-
-module.exports = require("assert");;
-
-/***/ }),
-
-/***/ 129:
-/***/ ((module) => {
-
-module.exports = require("child_process");;
-
-/***/ }),
-
-/***/ 614:
-/***/ ((module) => {
-
-module.exports = require("events");;
-
-/***/ }),
-
-/***/ 747:
-/***/ ((module) => {
-
-module.exports = require("fs");;
-
-/***/ }),
-
-/***/ 87:
-/***/ ((module) => {
-
-module.exports = require("os");;
-
-/***/ }),
-
-/***/ 622:
-/***/ ((module) => {
-
-module.exports = require("path");;
-
-/***/ }),
-
-/***/ 669:
-/***/ ((module) => {
-
-module.exports = require("util");;
-
 /***/ })
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		var threw = true;
-/******/ 		try {
-/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 			threw = false;
-/******/ 		} finally {
-/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
-/******/ 		}
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat */
-/******/ 	
-/******/ 	__webpack_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(699);
-/******/ })()
-;
+/******/ });
